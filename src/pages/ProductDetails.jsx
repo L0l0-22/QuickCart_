@@ -2,15 +2,17 @@ import { useState } from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { BiHeart } from "react-icons/bi";
-import mainImg from "../assets/img4.png";
-import mini1 from "../assets/img3.png";
-import mini2 from "../assets/img1.png";
-import mini3 from "../assets/img2.png";
-import mini4 from "../assets/img5.png";
+import mainImg from "../assets/img1.jpg";
+import mini1 from "../assets/img7.jpg";
+import mini2 from "../assets/img6.jpg";
+import mini3 from "../assets/img2.jpg";
+import mini4 from "../assets/img5.jpg";
 import { GiCardboardBoxClosed, GiWorld } from "react-icons/gi";
 import { MdDateRange } from "react-icons/md";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import NavsTabs from "../components/NavbsTabs";
+import RelatedProducts from "../components/RelatedProducts";
 
 export default function ProductDetails() {
 const product = {
@@ -52,6 +54,7 @@ const [quantity, setQuantity] = useState(1);
 const increaseQty = () => setQuantity(prev => prev + 1);
 const decreaseQty = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 const navigate = useNavigate();
+const [selectedImage, setSelectedImage] = useState(mainImg);
 
 return (
     <div className="w-full px-4 lg:px-24 py-8">
@@ -59,22 +62,31 @@ return (
         Home / Shop / <span className="text-redS font-medium">{product.name}</span>
         </p>
         <div className=" flex flex-col lg:flex-row gap-12">
-        <div className="flex md:flex-row flex-col w-full lg:w-[49%] gap-6 md:gap-0">
-            <div className="flex md:flex-col gap-2">
-            {product.images.map((img, index) => (
-                <img
+        <div className="flex flex-col gap-4 lg:w-[50%] w-full">
+        <div className="w-full border rounded-lg overflow-hidden">
+            <img
+            className="w-full max-h-[30.3rem] object-cover bg-white p-4"
+            src={selectedImage}
+            alt="Selected Product"
+            />
+        </div>
+        <div className="flex gap-3 justify-center">
+            {[mainImg, ...product.images].map((img, index) => (
+            <div
                 key={index}
+                onClick={() => setSelectedImage(img)}
+                className={`border-2 rounded-md overflow-hidden cursor-pointer transition duration-150 ease-in-out ${
+                selectedImage === img ? "border-black" : "border-transparent hover:border-gray-300"
+                }`}
+            >
+                <img
                 src={img}
                 alt={`thumbnail-${index}`}
-                className="lg:h-32 md:h-36 h-16 object-cover rounded cursor-pointer "
+                className="w-24 h-20 object-cover rounded"
                 />
-            ))}
             </div>
-            <img
-            src={mainImg}
-            alt="Main Product"
-            className="w-full md:h-[600px] lg:h-[535px] object-contain rounded-lg bg-white lg:ml-4"
-            />
+            ))}
+        </div>
         </div>
         <div className="w-full lg:w-[50%] flex flex-col gap-1">
             <h2 className="text-3xl font-semibold mb-1">{product.name}</h2>
@@ -204,7 +216,7 @@ return (
                     </div>
                 </div>
             </div>
-            <div>
+            {/* <div>
                 <p className="text-base font-semibold mb-2">Reviews</p>
                 {product.reviewsList.map((r, i) => (
                 <div key={i} className="border p-4 rounded-md mb-3">
@@ -230,10 +242,11 @@ return (
                     <p className="text-sm text-gray-700">{r.comment}</p>
                 </div>
                 ))}
-            </div>
+            </div> */}
         </div>
         </div>
+        <NavsTabs/>
+        <RelatedProducts/>
     </div>
-
 );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FiHeart, FiMinus, FiPlus } from "react-icons/fi";
-import controllerImg from "../assets/img4.png"; 
+import controllerImg from "../assets/img4.jpg"; 
 import { MdDeleteOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 

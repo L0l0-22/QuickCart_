@@ -22,6 +22,9 @@ export default {
       animation: {
         slide: 'slideIn 3s ease-in-out infinite, slideOut 3s ease-in-out infinite',
       },
+       fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],
