@@ -7,8 +7,10 @@ import { BsCheck2Circle } from "react-icons/bs";
 import { GoHeartFill } from "react-icons/go";
 import { LuUserSearch } from "react-icons/lu";
 import { FaRegStar } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export default function ReviewsContent() {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState("All");
   const [model2, setModel2] = useState(false);
   const [rating, setRating] = useState(0);
@@ -16,6 +18,7 @@ export default function ReviewsContent() {
   const [reviewText, setReviewText] = useState("");
   const toggleModel2 = () => setModel2(!model2);
   const handleClick = (index) => setRating(index + 1);
+
   const reviews = [
     {
       id: 1,
@@ -50,6 +53,7 @@ export default function ReviewsContent() {
       imgSrc: reviewpic,
     },
   ];
+
   const filteredReviews =
     activeFilter === "All"
       ? reviews
@@ -59,6 +63,7 @@ export default function ReviewsContent() {
     rating: r,
     count: reviews.filter((rev) => rev.rating === r).length,
   }));
+
   const totalReviews = reviews.length;
 
   const handleSubmitReview = () => {
@@ -75,32 +80,29 @@ export default function ReviewsContent() {
 
   return (
     <div id="content3" className="flex">
-      {/* Summary */}
       <div className="flex flex-col my-8 pr-8 w-[30%] h-fit">
-        <div >
-          <div className=" mb-3">
-            <div className="flex flex-col gap-8">
-              <div className="px-2 py-1 rounded">
-                <span className="text-redS text-4xl font-bold bg-gray-50 shadow-lg p-3 rounded">4.7</span>
+        <div className="mb-3">
+          <div className="flex flex-col gap-8">
+            <div className="px-2 py-1 rounded">
+              <span className="text-redS text-4xl font-bold bg-gray-50 shadow-lg p-3 rounded">4.7</span>
+            </div>
+            <div>
+              <div className="stars flex gap-1">
+                {[...Array(5)].map((_, idx) => (
+                  <img src={stars} alt="star" key={idx} />
+                ))}
               </div>
-              <div>
-                <div className="stars flex gap-1">
-                  {[...Array(5)].map((_, idx) => (
-                    <img src={stars} alt="star" key={idx} />
-                  ))}
-                </div>
-                <p className="card111-text text-sm text-gray-600 mt-1">
-                  Based on {totalReviews} reviews
-                </p>
-              </div>
+              <p className="card111-text text-sm text-gray-600 mt-1">
+                {t("reviews.based_on", { count: totalReviews })}
+              </p>
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 mt-2 ">
+
+        <div className="grid grid-cols-1 mt-2">
           {ratingCounts.map((item, index) => {
             const percentage = Math.round((item.count / totalReviews) * 100) || 0;
             if (item.count === 0) return null;
-
             return (
               <div className="review-bar flex items-center mb-2 w-full" key={index}>
                 <span className="mr-2 font-medium">{item.rating}</span>
@@ -111,174 +113,158 @@ export default function ReviewsContent() {
                     style={{ width: `${percentage}%`, minWidth: percentage > 0 ? '2px' : '0' }}
                   ></div>
                 </div>
-
                 <div className="text-sm text-gray-600 font-medium text-right">{percentage}%</div>
               </div>
             );
           })}
         </div>
-          <div className="mt-6 space-y-4 text-sm text-gray-700 max-w-[26rem]">
-            <div>
+
+        <div className="mt-6 space-y-4 text-sm text-gray-700 max-w-[26rem]">
+          <div>
             <div className="flex items-center gap-3 mb-2">
-              <LuUserSearch className="text-redS bg-gray-100 rounded-full p-2" size={36}/>
-              <p className="font-semibold text-gray-800 text-lg">How do I review this product?</p>
+              <LuUserSearch className="text-redS bg-gray-100 rounded-full p-2" size={36} />
+              <p className="font-semibold text-gray-800 text-lg">{t("reviews.how_to.title")}</p>
             </div>
-              <p>If you recently purchased this product from noon, you can go to your Orders page and click on the <span className="font-medium">Submit Review</span> button.</p>
-            </div>
-            <div>
+            <p>{t("reviews.how_to.desc")}</p>
+          </div>
+
+          <div>
             <div className="flex items-center gap-3 mb-2">
-              <FaRegStar className="text-redS bg-gray-100 rounded-full p-2" size={36}/>
-              <p className="font-semibold text-gray-800 text-lg">Where do the reviews come from?</p>
+              <FaRegStar className="text-redS bg-gray-100 rounded-full p-2" size={36} />
+              <p className="font-semibold text-gray-800 text-lg">{t("reviews.where_from.title")}</p>
             </div>
-              <p>Our reviews are from noon customers who purchased the product and submitted a review.</p>
-            </div>
-          </div>
-      </div>
-    <div className="w-[70%]">
-      {/* Filter */}
-      <div className="review-list mb-6 rounded-lg px-4 ">
-        <ul className="flex gap-5 flex-wrap">
-          {["All", "5", "4", "3", "2", "1"].map((label) => (
-            <li className="List-item1" key={label}>
-              <button
-                className={`font-semibold ${
-                  activeFilter === label
-                    ? "font-bold bg-redS text-white"
-                    : ""
-                } px-4 py-1 rounded-lg hover:bg-redS hover:text-white text-gray-600 border`}
-                onClick={() => setActiveFilter(label)}
-              >
-                {label === "All" ? "All" : `${label} Stars`}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Filtered Reviews */}
-      <div className="mb-3" id="all-review-content">
-        {filteredReviews.length === 0 ? (
-          <div className="text-center text-gray-500 py-4">
-            No reviews found for this rating.
-          </div>
-        ) : (
-          filteredReviews.map((review) => (
-            <div
-              className="single-review-container mt-4 p-3 sm:p-4 bg-white rounded-lg shadow-sm"
-              key={review.id}
-            >
-              <div className="flex flex-col sm:flex-row gap-4 ">
-                    <div className="flex w-3/4 space-x-4">
-                      <div className="pt-2">
-                        <img
-                          src={review.imgSrc}
-                          className="review-img w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
-                          alt="Review"
-                        />
-                      </div>
-                      <div>
-                        <div className="card111-body">
-                          <p className="card111-text font-medium">
-                            {review.name}
-                          </p>
-                          <div className="stars flex mt-1">
-                            {[...Array(review.rating)].map((_, idx) => (
-                              <img
-                                src={stars}
-                                key={idx}
-                                alt="star"
-                                className="w-4 h-4"
-                              />
-                            ))}
-                          </div>
-                           <span className="font-medium text-sm sm:text-base">
-                              {review.title}
-                            </span>
-                            <p className="text-sm sm:text-base mt-1 text-gray-600">
-                              {review.text}
-                            </p>
-                        </div>
-                      </div>
-                    </div>
-                <div className="">
-                  <button className="p-2 border border-redS text-redS flex items-center rounded-md mt-2">
-                    <GoHeartFill size={20} className="mr-3" />
-                    Like
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      {/* Write Review Button */}
-      <div className="w-[40%] mx-auto mt-9">
-        <button
-          onClick={toggleModel2}
-          className="w-full p-3 bg-main text-white rounded-lg hover:bg-mainHover text-lg"
-        >
-          Write a Review
-        </button>
-      </div>
-
-      {/* Modal */}
-      {model2 && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-xl w-[90%] max-w-md relative">
-            {isSubmitted ? (
-              <div className="flex flex-col justify-center items-center h-60">
-                <BsCheck2Circle size={64} className="text-green-500 mb-4" />
-                <p className="text-lg font-semibold text-green-600">
-                  Review Submitted!
-                </p>
-              </div>
-            ) : (
-              <>
-                <div className="flex justify-center mb-4">
-                  <img src={writereview} alt="Write Review" className="w-24" />
-                </div>
-                <p className="text-2xl font-semibold text-center mb-2">
-                  Your Review
-                </p>
-                <div className="flex justify-center mb-4">
-                  {[...Array(5)].map((_, index) => (
-                    <span
-                      key={index}
-                      className={`cursor-pointer text-2xl ${
-                        index < rating ? "text-yellow-500" : "text-gray-300"
-                      }`}
-                      onClick={() => handleClick(index)}
-                    >
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <textarea
-                  className="w-full border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-redS"
-                  rows="3"
-                  placeholder="Write your review..."
-                  value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
-                />
-                <button
-                  onClick={handleSubmitReview}
-                  className="mt-4 w-full p-2 bg-main text-white rounded hover:bg-mainHover"
-                >
-                  Submit Review
-                </button>
-              </>
-            )}
-            <button
-              onClick={toggleModel2}
-              className="absolute top-4 right-4 text-gray-500 hover:text-black"
-            >
-              <IoMdClose size={24} />
-            </button>
+            <p>{t("reviews.where_from.desc")}</p>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+
+      <div className="w-[70%]">
+        <div className="review-list mb-6 rounded-lg px-4 ">
+          <ul className="flex gap-5 flex-wrap">
+            {["All", "5", "4", "3", "2", "1"].map((label) => (
+              <li className="List-item1" key={label}>
+                <button
+                  className={`font-semibold ${
+                    activeFilter === label ? "font-bold bg-redS text-white" : ""
+                  } px-4 py-1 rounded-lg hover:bg-redS hover:text-white text-gray-600 border`}
+                  onClick={() => setActiveFilter(label)}
+                >
+                  {label === "All"
+                    ? t("reviews.filter.all")
+                    : t("reviews.filter.stars", { num: label })}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mb-3" id="all-review-content">
+          {filteredReviews.length === 0 ? (
+            <div className="text-center text-gray-500 py-4">
+              {t("reviews.no_reviews")}
+            </div>
+          ) : (
+            filteredReviews.map((review) => (
+              <div className="single-review-container mt-4 p-3 sm:p-4 bg-white rounded-lg shadow-sm" key={review.id}>
+                <div className="flex flex-col sm:flex-row gap-4 ">
+                  <div className="flex w-3/4 space-x-4">
+                    <div className="pt-2">
+                      <img
+                        src={review.imgSrc}
+                        className="review-img w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
+                        alt="Review"
+                      />
+                    </div>
+                    <div>
+                      <div className="card111-body">
+                        <p className="card111-text font-medium">{review.name}</p>
+                        <div className="stars flex mt-1">
+                          {[...Array(review.rating)].map((_, idx) => (
+                            <img src={stars} key={idx} alt="star" className="w-4 h-4" />
+                          ))}
+                        </div>
+                        <span className="font-medium text-sm sm:text-base">{review.title}</span>
+                        <p className="text-sm sm:text-base mt-1 text-gray-600">{review.text}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <button className="p-2 border border-redS text-redS flex items-center rounded-md mt-2">
+                      <GoHeartFill size={20} className="mr-3" />
+                      {t("reviews.like")}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="w-[40%] mx-auto mt-9">
+          <button
+            onClick={toggleModel2}
+            className="w-full p-3 bg-main text-white rounded-lg hover:bg-mainHover text-lg"
+          >
+            {t("reviews.write_button")}
+          </button>
+        </div>
+
+        {model2 && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+            <div className="bg-white p-8 rounded-xl w-[90%] max-w-md relative">
+              {isSubmitted ? (
+                <div className="flex flex-col justify-center items-center h-60">
+                  <BsCheck2Circle size={64} className="text-green-500 mb-4" />
+                  <p className="text-lg font-semibold text-green-600">
+                    {t("reviews.modal.success")}
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <div className="flex justify-center mb-4">
+                    <img src={writereview} alt="Write Review" className="w-24" />
+                  </div>
+                  <p className="text-2xl font-semibold text-center mb-2">
+                    {t("reviews.modal.title")}
+                  </p>
+                  <div className="flex justify-center mb-4">
+                    {[...Array(5)].map((_, index) => (
+                      <span
+                        key={index}
+                        className={`cursor-pointer text-2xl ${
+                          index < rating ? "text-yellow-500" : "text-gray-300"
+                        }`}
+                        onClick={() => handleClick(index)}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <textarea
+                    className="w-full border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-redS"
+                    rows="3"
+                    placeholder={t("reviews.modal.placeholder")}
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                  />
+                  <button
+                    onClick={handleSubmitReview}
+                    className="mt-4 w-full p-2 bg-main text-white rounded hover:bg-mainHover"
+                  >
+                    {t("reviews.modal.submit")}
+                  </button>
+                </>
+              )}
+              <button
+                onClick={toggleModel2}
+                className="absolute top-4 right-4 text-gray-500 hover:text-black"
+              >
+                <IoMdClose size={24} />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

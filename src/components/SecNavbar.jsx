@@ -1,92 +1,101 @@
-import React from 'react';
-import { IoIosArrowDown } from 'react-icons/io';
-import { RiMenu2Line } from 'react-icons/ri';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 export default function SecNavbar() {
+  const { t } = useTranslation();
+  const [key, setKey] = useState(0); // Key to force re-render
+  const isRTL = i18n.dir() === 'rtl';
+
+  // Refresh Swiper when language/direction changes
+  useEffect(() => {
+    setKey(prevKey => prevKey + 1);
+  }, [i18n.language]);
+
+  const categories = [
+    { label: t('electronics'), path: '/shop' },
+    { label: t('womens_fashion'), path: '/brands' },
+    { label: t('mens_fashion'), path: '/brands2' },
+    { label: t('kids_fashion'), path: '/brands3' },
+    { label: t('health_nutrition'), path: '/Health' },
+    { label: t('home_appliances'), path: '/customer' },
+    { label: t('beauty_fragrance'), path: '/more' },
+    { label: t('toys_games'), path: '/more' },
+    { label: t('supermarket'), path: '/more' },
+    { label: t('sports_outdoors'), path: '/more' },
+    { label: t('stationery_books'), path: '/more' },
+    { label: t('automotive'), path: '/more' },
+    { label: t('baby'), path: '/more' },
+  ];
+
   return (
-    <nav className="relative flex flex-col xl:flex-row items-start xl:items-center justify-between xl:justify-center mt-1 pt-4 w-full z-40 bg-white shadow-sm px-4 xl:px-0 container mx-auto">
-      {/* Browse Categories Button */}
-      <div className="flex items-center w-auto justify-between">
-        <button className="flex justify-between items-center bg-redS text-white p-2 rounded text-xs lg:text-base font-semibold mb-3 mr-5 h-fit w-56">
-          <RiMenu2Line className="w-4 h-4 lg:w-5 lg:h-5 mr-1" />
-          Browse Categories
-          <IoIosArrowDown className="w-4 h-4 lg:w-5 lg:h-5 ml-1" />
-        </button>
-      </div>
-
-      {/* Swiper Nav */}
-      <div className="relative overflow-visible w-full max-w-full">
+    <nav className="mt-[2px] pb-2 pt-4 w-full z-40 bg-white shadow-md px-4 xl:px-0 overflow-hidden">
+      <div className=" w-full relative px-20">
         <Swiper
+          key={key}
+          dir={isRTL ? 'rtl' : 'ltr'}
           modules={[Navigation]}
-          spaceBetween={20}
-          navigation
-          className="w-full mb-3"
-           breakpoints={{
-                0: {
-                slidesPerView: 2.5,
-                },
-                480: {
-                slidesPerView: 3.5,
-                },
-                640: {
-                slidesPerView: 4.5,
-                },
-                768: {
-                slidesPerView: 5.5,
-                },
-                1024: {
-                slidesPerView: 6.5,
-                },
-                1280: {
-                slidesPerView: 'auto',
-                },
-            }}
+          spaceBetween={5}
+          slidesPerView={'auto'}
+          navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+            disabledClass: "swiper-button-disabled"
+          }}
+          className={isRTL ? 'swiper-rtl' : ''}
+          breakpoints={{
+            640: { spaceBetween: 20 },
+            1024: { spaceBetween: 25 },
+            1280: { spaceBetween: 30 }
+          }}
         >
-          <style>
-            {`
-            .swiper-button-next,
-            .swiper-button-prev {
-                color: #dc2626 !important;
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-                z-index: 10;
-            }
-
-            .swiper-button-next::after,
-            .swiper-button-prev::after {
-                font-size: 16px !important;
-                font-weight: bold;
-            }
-            `}
-          </style>
-
-          {[
-            { label: 'Electronics', path: '/shop' },
-            { label: "Women's Fashion", path: '/brands' },
-            { label: "Men's Fashion", path: '/brands' },
-            { label: 'Kids Fashion', path: '/brands' },
-            { label: 'Health & Nutrition', path: '/Health' },
-            { label: 'Home & Appliances', path: '/customer' },
-            { label: 'Beauty & Fragrance', path: '/more' },
-            { label: 'Toys & Games', path: '/more' },
-            { label: 'Supermarket', path: '/more' },
-            { label: 'Sports & Outdoors', path: '/more' },
-          ].map((item, idx) => (
+          {categories.map((item, idx) => (
             <SwiperSlide key={idx} className="!w-auto">
               <NavLink
                 to={item.path}
-                className="hover:text-redS font-semibold text-sm lg:text-lg text-gray-500 whitespace-nowrap"
+                className="hover:text-redS hover:underline underline-offset-4 font-semibold text-sm lg:text-lg text-gray-500 whitespace-nowrap px-2"
               >
                 {item.label}
               </NavLink>
             </SwiperSlide>
           ))}
         </Swiper>
+
+        <style>
+          {`
+          .swiper-button-prev,
+            .swiper-button-next {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .swiper-button-prev::after,
+            .swiper-button-next::after {
+              font-size: 16px !important;
+              color: #1E1E1E;
+              font-weight: 700;
+            }
+            @media (max-width: 640px) {
+              .swiper-button-prev::after,
+              .swiper-button-next::after {
+                font-size: 14px !important;
+              }
+            }
+            .swiper-button-disabled {
+              opacity: 0.35;
+              cursor: auto;
+              pointer-events: none;
+            }
+          `}
+        </style>
+
+        <div className="swiper-button-prev !left-12 !top-1/2" />
+        <div className="swiper-button-next !right-12 !top-1/2" />
       </div>
     </nav>
   );

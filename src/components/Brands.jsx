@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 import apple from '../assets/apple.png';
 import rolex from '../assets/rolex.png';
 import adidas from '../assets/adidas.png';
@@ -36,13 +38,16 @@ const brands = [
 ];
 
 export default function Brands() {
+  const { t } = useTranslation();
+
   return (
     <div className="py-10 px-4 lg:px-20 bg-white">
       <h2 className="text-3xl font-bold flex text-center justify-center items-center mb-8">
-        Explore Our 
+        {t('brands.titlePart1')}
         <div className="border border-[#FF3C3C] h-1 w-7 bg-[#FF3C3C] mt-7 mx-2"></div>
-        <span className="text-[#FF3C3C]">Brand Partners</span>
+        <span className="text-[#FF3C3C]">{t('brands.titlePart2')}</span>
       </h2>
+
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6 place-items-center">
         {brands.map((brand, idx) => (
           <div
@@ -56,11 +61,12 @@ export default function Brands() {
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="text-base font-semibold text-main mt-2">{brand.name}</p>
+            <p className="text-base font-semibold text-main mt-2">
+              {t(`brands.names.${brand.name}`)}
+            </p>
           </div>
         ))}
       </div>
     </div>
   );
 }
-

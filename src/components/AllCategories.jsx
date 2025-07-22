@@ -1,9 +1,11 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
+import { useTranslation } from 'react-i18next'; // <-- import
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
+
 import watch from "../assets/watch.png";
 import men from "../assets/men.png";
 import rings from "../assets/rings.png";
@@ -14,6 +16,7 @@ import playstation from "../assets/playstation.png";
 import kitchen from "../assets/kitchen2.png";
 import flamingo from "../assets/flamingo.png";
 import speaker from "../assets/speaker.png";
+import i18n from '../i18n';
 
 const categories = [
   { id: 1, name: 'Smart Watches', image: watch },
@@ -32,10 +35,13 @@ const categories = [
 ];
 
 export default function AllCategories() {
+  const { t } = useTranslation(); // <-- use hook
+  const isRTL = i18n.dir() === 'rtl';
   return (
     <div className="relative pt-12">
       <div className="mx-10 relative ">
         <Swiper
+          dir={isRTL ? 'rtl' : 'ltr'}
           slidesPerView={10}
           spaceBetween={20}
           freeMode={true}
@@ -50,7 +56,7 @@ export default function AllCategories() {
             768: { slidesPerView: 5 },
             1024: { slidesPerView: 10 },
           }}
-          className="scrollbar-hide relative pb-12"
+          className={`scrollbar-hide relative pb-12 ${isRTL ? 'swiper-rtl' : ''}`}
         >
           {categories.map((cat) => (
             <SwiperSlide key={cat.id}>
@@ -62,7 +68,7 @@ export default function AllCategories() {
                     className="w-20 h-20 object-contain transition-transform duration-300 hover:scale-110"
                   />
                 </div>
-                <p className="text-base font-semibold">{cat.name}</p>
+                <p className="text-base font-semibold">{t(`categories.${cat.name}`)}</p>
               </div>
             </SwiperSlide>
           ))}
@@ -71,5 +77,3 @@ export default function AllCategories() {
     </div>
   );
 }
-
-

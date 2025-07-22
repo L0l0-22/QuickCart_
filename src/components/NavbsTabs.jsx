@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DescriptionContent from './DescriptionContent';
 import ReviewsContent from './ReviewsContent';
 
 const NavsTabs = () => {
-  const [activeTab, setActiveTab] = useState('Product Overview');
+  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState('overview');
 
   const getTabClass = (tabId) => {
     const baseClass = "inline-block p-4 border-b-2 rounded-t-lg";
@@ -20,24 +22,24 @@ const NavsTabs = () => {
         <ul className="flex flex-wrap -mb-px font-medium text-center" role="tablist">
           <li className="me-2" role="presentation">
             <button
-              className={getTabClass('Product Overview')}
+              className={getTabClass('overview')}
               id="Product-Overview-tab"
               type="button"
               role="tab"
-              onClick={() => setActiveTab('Product Overview')}
+              onClick={() => setActiveTab('overview')}
             >
-              Product Overview
+              {t('tabs.product_overview')}
             </button>
           </li>
           <li className="me-2" role="presentation">
             <button
-              className={getTabClass('Product Ratings & Reviews')}
+              className={getTabClass('reviews')}
               id="Product-Ratings-Reviews-tab"
               type="button"
               role="tab"
-              onClick={() => setActiveTab('Product Ratings & Reviews')}
+              onClick={() => setActiveTab('reviews')}
             >
-              Product Ratings & Reviews
+              {t('tabs.product_reviews')}
             </button>
           </li>
         </ul>
@@ -45,8 +47,8 @@ const NavsTabs = () => {
 
       {/* Tab Contents */}
       <div className="w-[80%] mx-auto md:w-full mt-5">
-        {activeTab === 'Product Overview' && <DescriptionContent />}
-        {activeTab === 'Product Ratings & Reviews' && <ReviewsContent />}
+        {activeTab === 'overview' && <DescriptionContent />}
+        {activeTab === 'reviews' && <ReviewsContent />}
       </div>
     </div>
   );

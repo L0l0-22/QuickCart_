@@ -1,79 +1,82 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiShoppingBag } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
+
 import rings from "../assets/rings.png";
 import iphone from "../assets/iphone.png";
 import headphones from "../assets/headphones.png";
 import playstation from "../assets/playstation.png";
-import speaker from "../assets/speaker.png"
+import speaker from "../assets/speaker.png";
 
 export default function Wishlist() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const [wishlistItems, setWishlistItems] = useState([
     {
       id: 1,
-      name: "DualSense Wireless Controller for PS5",
+      name: t("products.dualsenseWireless"),
       color: "White",
       size: "M",
       price: 64.99,
       image: speaker,
       rating: 4,
       reviews: 328,
-      available: "In Stock",
+      available: t("status.inStock"),
       isNew: true,
     },
     {
       id: 2,
-      name: "DualSense Charging Station",
+      name: t("products.dualsenseCharger"),
       color: "White",
       size: "Standard",
       price: 29.99,
       image: rings,
       rating: 5,
       reviews: 122,
-      available: "Only 3 left",
+      available: t("status.only3"),
       isNew: false,
     },
     {
       id: 3,
-      name: "Pulse 3D Wireless Headset",
+      name: t("products.pulse3D"),
       color: "Midnight Black",
       size: "Standard",
       price: 99.99,
       image: headphones,
       rating: 4,
       reviews: 204,
-      available: "In Stock",
+      available: t("status.inStock"),
       isNew: false,
     },
     {
       id: 4,
-      name: "PS5 Media Remote",
+      name: t("products.mediaRemote"),
       color: "White",
       size: "One Size",
       price: 24.99,
       image: iphone,
       rating: 3,
       reviews: 67,
-      available: "Low Stock",
+      available: t("status.lowStock"),
       isNew: true,
     },
     {
       id: 5,
-      name: "PlayStation HD Camera",
+      name: t("products.hdCamera"),
       color: "Black",
       size: "Standard",
       price: 59.99,
       image: playstation,
       rating: 4,
       reviews: 180,
-      available: "In Stock",
+      available: t("status.inStock"),
       isNew: false,
     },
+  ]);
 
-    ]);
   const removeItem = (id) => {
     setWishlistItems((prev) => prev.filter((item) => item.id !== id));
   };
@@ -81,7 +84,8 @@ export default function Wishlist() {
   return (
     <div className="px-6 lg:px-24 py-12 bg-gray-50 min-h-screen">
       <p className="text-lg text-gray-500 mb-4">
-        Home / Shop / <span className="text-redS font-medium">Wishlist</span>
+        {t("breadcrumbs.home")} / {t("breadcrumbs.shop")} /{" "}
+        <span className="text-redS font-medium">{t("wishlist.title")}</span>
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -93,7 +97,7 @@ export default function Wishlist() {
           >
             {product.isNew && (
               <span className="absolute top-3 left-3 bg-redS text-white text-xs px-2 py-1 rounded">
-                New
+                {t("labels.new")}
               </span>
             )}
             <span
@@ -112,7 +116,9 @@ export default function Wishlist() {
             />
             <div className="flex-1 flex flex-col justify-between">
               <div>
-                <h3 className="text-base font-semibold mb-1 line-clamp-2">{product.name}</h3>
+                <h3 className="text-base font-semibold mb-1 line-clamp-2">
+                  {t(product.name)}
+                </h3>
                 <div className="flex items-center mb-2">
                   {[...Array(5)].map((_, index) => (
                     <span key={index}>
@@ -123,20 +129,25 @@ export default function Wishlist() {
                       )}
                     </span>
                   ))}
-                  <p className="text-sm text-gray-400 mb-1 ml-2">({product.reviews})</p>
+                  <p className="text-sm text-gray-400 mb-1 ml-2">
+                    ({product.reviews})
+                  </p>
                 </div>
-                <p className="text-lg font-bold text-main">${product.price.toFixed(2)}</p>
-                <p className="text-xs text-red-500 mt-1">Available: {product.available}</p>
+                <p className="text-lg font-bold text-main">
+                  ${product.price.toFixed(2)}
+                </p>
+                <p className="text-xs text-red-500 mt-1">
+                  {t("wishlist.available")}: {product.available}
+                </p>
               </div>
               <button
                 className="mt-4 bg-main text-white text-sm font-semibold py-2 rounded hover:bg-mainHover transition"
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(`/cart`);
-                  // Add to cart logic
                 }}
               >
-                Add to Cart
+                {t("wishlist.addToCart")}
               </button>
             </div>
           </div>

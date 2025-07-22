@@ -10,19 +10,22 @@ import slide3 from '../assets/slide3.avif';
 import slide4 from '../assets/slide4.avif';
 
 import AllCategories from "./AllCategories";
+import i18n from '../i18n';
 
 export default function MainSlider() {
-  return (
+  const isRTL = i18n.dir() === 'rtl';
+    return (
     <section id="home">
       <div className="relative">
         <Swiper
-          modules={[Pagination, Navigation, Autoplay]}
-          pagination={{ clickable: true }}
-          navigation
-          autoplay={{ delay: 4000 }}
-          loop={true}
-          className="w-full "
-        >
+            dir={isRTL ? 'rtl' : 'ltr'}
+            className={`w-full ${isRTL ? 'swiper-rtl' : ''}`} // 👈 Add this
+            modules={[Pagination, Navigation, Autoplay]}
+            pagination={{ clickable: true }}
+            navigation
+            autoplay={{ delay: 4000 }}
+            loop={true}
+          >
           <SwiperSlide>
             <div className="relative w-full">
               <img
@@ -81,7 +84,7 @@ export default function MainSlider() {
             }
             .swiper-button-prev,
             .swiper-button-next {
-              background: rgba(255, 255, 255, 0.5);
+              background: rgba(255, 255, 255, 0.6);
               width: 40px;
               height: 40px;
               border-radius: 9999px;
@@ -92,7 +95,7 @@ export default function MainSlider() {
             .swiper-button-prev::after,
             .swiper-button-next::after {
               font-size: 20px;
-              color: #02478d;
+              color: #1E1E1E;
               font-weight: 700;
             }
             @media (max-width: 640px) {
