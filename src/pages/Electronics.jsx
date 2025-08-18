@@ -155,33 +155,12 @@ const products = [
         </div>
         <ExploreAccessories/>
         <Offers
-          discount="50% OFF"
-          subtext="selected electronics"
+          discount={t("offers.discount")}
+          subtext={t("offers.subtextSelected")}
           items={[
-            { 
-              id: 1, 
-              title: "Huawei matepad 11", 
-              image: tablets, 
-              oldPrice: "$999", 
-              price: "$799", 
-              badge: "SALE" 
-            },
-            { 
-              id: 2, 
-              title: "Apple Watch Series 9", 
-              image: watch, 
-              oldPrice: "$299", 
-              price: "$199", 
-              badge: "SALE" 
-            },
-            { 
-              id: 3, 
-              title: "iPhone 15 Pro Max", 
-              image: iphone, 
-              oldPrice: "$1299", 
-              price: "$999", 
-              badge: "SALE" 
-            },
+            { id: 1, title: t("offers.items.huaweiMatepad11"), image: tablets, oldPrice: "$999", price: "$799", badge: t("offers.badges.sale") },
+            { id: 2, title: t("offers.items.appleWatchSeries9"), image: watch,   oldPrice: "$299", price: "$199", badge: t("offers.badges.sale") },
+            { id: 3, title: t("offers.items.iphone15ProMax"),   image: iphone,  oldPrice: "$1299", price: "$999", badge: t("offers.badges.sale") }
           ]}
         />
         <div className=''>

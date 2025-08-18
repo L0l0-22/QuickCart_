@@ -553,6 +553,7 @@
     "newest": "Newest"
   },
   "filters": {
+    "filter":"Filter",
     "rating": "Rating",
     "category": "Category",
     "price": "Price",
@@ -632,6 +633,20 @@
       "name": "Multi-functional Kitchen Grinder",
       "by": "KitchenPro",
       "rate": "1.4K Reviews"
+    }
+  },
+  "offers": {
+    "headline": "LIMITED TIME OFFER",
+    "discount": "50% OFF",
+    "subtextSelected": "selected electronics",
+    "cta": "SHOP NOW",
+    "badges": {
+      "sale": "SALE"
+    },
+    "items": {
+      "huaweiMatepad11": "Huawei MatePad 11",
+      "appleWatchSeries9": "Apple Watch Series 9",
+      "iphone15ProMax": "iPhone 15 Pro Max"
     }
   }
 }
