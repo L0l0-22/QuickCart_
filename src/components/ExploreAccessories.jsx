@@ -51,7 +51,7 @@ export default function ExploreAccessories({
 
   return (
     <section className={`py-12 px-6 md:px-4 lg:px-20 ${className}`}>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col md:flex-row gap-5 md:gap-0 items-center justify-between mb-4">
         <h2 className="text-3xl font-extrabold leading-snug md:text-4xl">
           {t("accessories.title.prefix")}
           <span className="inline-block mx-3 align-middle">
@@ -77,7 +77,7 @@ export default function ExploreAccessories({
         )}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
         {/* Big Card */}
         <Link
           to="/search"
@@ -100,7 +100,7 @@ export default function ExploreAccessories({
             <Link
               key={it.id}
               to="/search"
-              className="relative flex items-center justify-center transition-shadow bg-gray-100 border border-gray-200 rounded-xl hover:shadow-md h-28 md:h-48"
+              className="w-full md:w-auto relative flex items-center justify-center transition-shadow bg-gray-100 border border-gray-200 rounded-xl hover:shadow-md h-28 md:h-48"
             >
               <img
                 src={it.img}

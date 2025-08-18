@@ -79,8 +79,8 @@ export default function ReviewsContent() {
   };
 
   return (
-    <div id="content3" className="flex">
-      <div className="flex flex-col my-8 pr-8 w-[30%] h-fit">
+    <div id="content3" className="flex flex-col md:flex-row">
+      <div className="flex flex-col my-8 md:pr-8 w-full md:w-[30%] h-fit">
         <div className="mb-3">
           <div className="flex flex-col gap-8">
             <div className="px-2 py-1 rounded">
@@ -138,9 +138,9 @@ export default function ReviewsContent() {
         </div>
       </div>
 
-      <div className="w-[70%]">
+      <div className="w-full md:w-[70%]">
         <div className="review-list mb-6 rounded-lg px-4 ">
-          <ul className="flex gap-5 flex-wrap">
+          <ul className="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
             {["All", "5", "4", "3", "2", "1"].map((label) => (
               <li className="List-item1" key={label}>
                 <button
@@ -167,11 +167,11 @@ export default function ReviewsContent() {
             filteredReviews.map((review) => (
               <div className="single-review-container mt-4 p-3 sm:p-4 bg-white rounded-lg shadow-sm" key={review.id}>
                 <div className="flex flex-col sm:flex-row gap-4 ">
-                  <div className="flex w-3/4 space-x-4">
+                  <div className="flex w-full md:w-3/4 space-x-4">
                     <div className="pt-2">
                       <img
                         src={review.imgSrc}
-                        className="review-img w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
+                        className="review-img w-12 h-12 sm:w-20 sm:h-20 rounded-full object-cover"
                         alt="Review"
                       />
                     </div>
@@ -200,7 +200,7 @@ export default function ReviewsContent() {
           )}
         </div>
 
-        <div className="w-[40%] mx-auto mt-9">
+        <div className="w-full md:w-[40%] mx-auto mt-9">
           <button
             onClick={toggleModel2}
             className="w-full p-3 bg-main text-white rounded-lg hover:bg-mainHover text-lg"

@@ -210,15 +210,15 @@ export default function Search() {
 
   return (
     <div className="px-6 lg:px-24 mt-14">
-      <div className="flex flex-col md:flex-row items-center justify-between px-12">
-        <p className="text-lg text-gray-500 mb-4">
+      <div className="flex flex-col gap-5 md:gap-0 md:flex-row items-center justify-between px-12">
+        <p className="text-lg text-gray-500">
           {t("common5.home")} / {t("common5.shop")} /{" "}
           <span className="text-redS font-medium">
             {t("breadcrumb5.search")}
           </span>
         </p>
         <div className="relative inline-block text-left" ref={dropdownRef}>
-          <div className="flex justify-end gap-4 mt-5">
+          <div className="flex justify-end gap-4">
             <div className="w-48 relative">
               <select className="appearance-none w-full px-3 py-2 rounded-md text-xs lg:text-sm font-medium shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryGreen focus:border-transparent bg-white text-gray-700">
                 <option value="">{t("sort.label")}</option>
